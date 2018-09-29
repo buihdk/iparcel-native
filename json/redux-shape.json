@@ -1,0 +1,12 @@
+{
+  "markers": {
+    "markers": []
+  },
+  "loginInfo": {
+    "currentUser": "Alex",
+    "currentLocation": {
+      "latitude": 10.77, 
+      "longitude": 106.7
+    }
+  }
+}

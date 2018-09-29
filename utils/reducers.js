@@ -1,45 +1,33 @@
 const initialState = {
-  messages: {
-    messageId: 2,
-    messages: [],
-    isTyping: false,
-    currentMessage: '',
-  },
-  users: {
-    users: [],
-    isRefreshing: false,
-    page: 1,
-    seed: 1,
-    error: null,
+  markers: {
+    markers: [],
   },
   loginInfo: {
-    currentUser: 'Khoa'
+    currentUser: 'Khoa',
+    'currentLocation': {
+      'latitude': null, 
+      'longitude': null
+    }
   }
 };
 
-export const messages = (state = initialState.messages, action) => {
+export const markers = (state = initialState.markers, action) => {
   switch(action.type) {
-  case 'START_LOAD_MESSAGES': {
+  case 'START_LOADING_MARKERS': {
     return {
       ...state,
     };
   }
-  case 'FINISH_LOAD_MESSAGES': {
+  case 'FINISH_LOADING_MARKERS': {
     return {
       ...state,
-      messages: action.messages
+      markers: action.markers
     };
   }
-  case 'RECEIVE_MESSAGE': {
+  case 'RECEIVE_MARKER': {
     return {
       ...state,
-      messages: state.messages.concat(action.message)
-    };
-  }
-  case 'SET_CURRENT_MESSAGE': {
-    return {
-      ...state,
-      currentMessage: action.message
+      markers: state.markers.concat(action.marker)
     };
   }
   default:
@@ -47,22 +35,15 @@ export const messages = (state = initialState.messages, action) => {
   }
 };
 
-export const users = (state = initialState.users, action) => {
+export const loginInfo = (state = initialState.loginInfo, action) => {
   switch(action.type) {
-  case 'START_FETCHING_USERS': {
-    return {
-      ...state,
-    };
-  }
-  case 'FINISH_FETCHING_USERS': {
-    return {
-      ...state,
-      users: action.users
-    };
-  }
-  default:
-    return state;
-  }
-};
-
-export const loginInfo = (state = initialState.loginInfo, action) => state;
+    case 'SET_CURRENT_LOCATION': {
+      return {
+        ...state,
+        currentLocation: action.location
+      };
+    }
+    default:
+      return state;
+    }
+}

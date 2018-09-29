@@ -1,33 +1,38 @@
 import firebase from './firebase';
 
-export const loadLocations = () => (dispatch) => {
-  dispatch(startLoadLocations());
-  firebase.database().ref('locations').once('value', (snapshot) => {
+export const loadMarkers = () => (dispatch) => {
+  dispatch(startLoadMarkers());
+  firebase.database().ref('markers').once('value', (snapshot) => {
     const data = snapshot.val();
     const formattedData = Object.keys(data).map(key => ({ key, ...data[key] }));
-    dispatch(finishLoadLocations(formattedData));
+    dispatch(finishLoadMarkers(formattedData));
   });
 
-  // firebase.database().ref('locations').on('child_added', (snapshot) => {
-  //   const location = { key: snapshot.key, ...snapshot.val() };
-  //   dispatch(receiveLocation(location));
-  // });
+  firebase.database().ref('markers').on('child_added', (snapshot) => {
+    const marker = { key: snapshot.key, ...snapshot.val() };
+    dispatch(receiveMarker(marker));
+  });
 };
 
-export const startLoadLocations = () => ({
-  type: 'START_LOAD_LOCATIONS'
+export const startLoadMarkers = () => ({
+  type: 'START_LOADING_MARKERS'
 });
 
-export const finishLoadLocations = (locations) => ({
-  type: 'FINISH_LOAD_LOCATIONS',
-  locations
+export const finishLoadMarkers = (markers) => ({
+  type: 'FINISH_LOADING_MARKERS',
+  markers
 });
 
-// export const receiveLocation = (location) => ({
-//   type: 'RECEIVE_LOCATION',
-//   location
-// });
+export const receiveMarker = (marker) => ({
+  type: 'RECEIVE_MARKER',
+  marker
+});
 
-// export const sendLocation = (location) => (dispatch) => {
-//   firebase.database().ref('locations').push(location);
-// };
+export const sendMarker = (marker) => (dispatch) => {
+  firebase.database().ref('markers').push(marker);
+};
+
+export const setCurrentLocation = (location) => ({
+  type: 'SET_CURRENT_LOCATION',
+  location
+});
