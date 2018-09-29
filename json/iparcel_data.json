@@ -1,0 +1,64 @@
+{
+  "markers" : {
+    "0" : {
+	  	"marker" : {
+	  		"title" : "Pizza 4P's Ben Thanh",
+	  		"coordinate" : {
+  				"latitude" : 10.773301,
+  				"longitude" : 106.6954425
+				},
+	  		"type" : "Point"
+	  	}
+    },
+    "1" : {
+	  	"marker" : {
+	  		"title" : "Bitexco Financial Tower",
+	  		"coordinate" : {
+  				"latitude" : 10.7734558,
+  				"longitude" : 106.702078
+				},
+	  		"type" : "Point"
+	  	}
+    },
+    "2" : {
+	  	"marker" : {
+	  		"title" : "Notre Dame Cathedral of Saigon",
+	  		"coordinate" : {
+  				"latitude" : 10.7793046,
+  				"longitude" : 106.6964499
+				},
+	  		"type" : "Point"
+	  	}
+    },
+    "3" : {
+	  	"marker" : {
+	  		"title" : "City Opera House",
+	  		"coordinate" : {
+  				"latitude" : 10.7797508,
+  				"longitude" : 106.6986441
+				},
+	  		"type" : "Point"
+	  	}
+    },
+    "4" : {
+	  	"marker" : {
+	  		"title" : "Independence Palace",
+	  		"coordinate" : {
+  				"latitude" : 10.7771404,
+  				"longitude" : 106.6956934
+				},
+	  		"type" : "Point"
+	  	}
+    },
+    "5" : {
+	  	"marker" : {
+	  		"title" : "New World Saigon Hotel",
+	  		"coordinate" : {
+  				"latitude" : 10.7688699,
+  				"longitude" : 106.6956212
+				},
+	  		"type" : "Point"
+	  	}
+    }
+  }
+}
