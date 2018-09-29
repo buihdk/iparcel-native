@@ -9,7 +9,7 @@
 * [ ] Create a random delivery (pickup to dropoff) in a 4km radius
 (Distance can be calculated using [Great Circle formula](https://en.wikipedia.org/wiki/Great-circle_distance))
 * [ ] Separate *presentational* and *container* components
-* [x] Mocked up marker data with format that can be used with MapView.Marker API
+* [x] Mocked up [marker data](./json/iparcel_data.json) with format that can be used with MapView.Marker API
 * [x] Generated Map screen and List screen using Tab Navigator
 * [x] Long press to add a new Marker
 * [x] Accessed current location using Permission API
