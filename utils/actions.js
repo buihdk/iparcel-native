@@ -28,7 +28,7 @@ export const receiveMarker = (marker) => ({
   marker
 });
 
-export const sendMarker = (marker) => (dispatch) => {
+export const sendMarker = (marker) => () => {
   firebase.database().ref('markers').push(marker);
 };
 
