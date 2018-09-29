@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { markers, loginInfo } from './utils/reducers';
-import Main from './components/containers/Main';
+import Tabs from './components/TabNavigator';
 
 const reducers = combineReducers({
   markers,
@@ -19,7 +19,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Main/>  
+        <Tabs/>  
       </Provider>
     );
   }
