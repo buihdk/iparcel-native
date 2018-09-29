@@ -37,13 +37,13 @@ export const markers = (state = initialState.markers, action) => {
 
 export const loginInfo = (state = initialState.loginInfo, action) => {
   switch(action.type) {
-    case 'SET_CURRENT_LOCATION': {
-      return {
-        ...state,
-        currentLocation: action.location
-      };
-    }
-    default:
-      return state;
-    }
-}
+  case 'SET_CURRENT_LOCATION': {
+    return {
+      ...state,
+      currentLocation: action.location
+    };
+  }
+  default:
+    return state;
+  }
+};

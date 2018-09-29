@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { View, FlatList } from 'react-native';
 import { SearchBar, List, ListItem } from 'react-native-elements';
 import { loadMarkers } from '../../utils/actions';
+import PropTypes from 'prop-types';
 
 class ListContainer extends Component {
   renderSeparator = () => {
@@ -18,7 +19,6 @@ class ListContainer extends Component {
       this.props.loadMarkers();
   }
   render() {
-    console.log('this.props.markers', this.props.markers);
     return (
       <View>
         <List containerStyle={{ marginTop: 40, borderTopWidth: 0, borderBottomWidth: 0 }}>
@@ -39,9 +39,14 @@ class ListContainer extends Component {
           />
         </List>
       </View> 
-    )
+    );
   }
 }
+
+ListContainer.propTypes = {
+  markers: PropTypes.array.isRequired, 
+  loadMarkers: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state) => ({
   markers: state.markers.markers,

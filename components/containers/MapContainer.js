@@ -63,9 +63,8 @@ class MapContainer extends Component {
         >
           { 
             this.props.markers.map((marker,index) => { 
-              console.log(marker.marker);
-              return <MapView.Marker {...marker.marker} key={index}/> 
-              })
+              return <MapView.Marker {...marker.marker} key={index} />;
+            })
           }  
         </MapView>
       );
