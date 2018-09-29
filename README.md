@@ -20,6 +20,7 @@
 ### Wishlist:
 * [ ] Direction for driver to a random delivery
 (inspiration: https://medium.com/@ali_oguzhan/react-native-maps-with-google-directions-api-bc716ed7a366)
+* [ ] Optimal delivery route given multiple delivery locations (inspiration: the [traveling salesman problem](https://en.wikipedia.org/wiki/Travelling_salesman_problem))
 
 ## Demo
 <img src="iparcel.gif" alt="demo gif"/>
