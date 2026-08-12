@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, FlatList } from 'react-native';
 import { SearchBar, List, ListItem } from 'react-native-elements';
-import { loadMarkers } from '../../utils/actions';
+import { loadMarkers, unloadMarkers } from '../../utils/actions';
 import PropTypes from 'prop-types';
 
 class ListContainer extends Component {
@@ -15,8 +15,11 @@ class ListContainer extends Component {
     return <SearchBar placeholder="Type Here..." lightTheme round />;
   };
   componentDidMount() {
-    if (this.props.markers.length < 1 || this.props.markers == undefined)
+    if (this.props.markers == undefined || this.props.markers.length < 1)
       this.props.loadMarkers();
+  }
+  componentWillUnmount() {
+    this.props.unloadMarkers();
   }
   render() {
     return (
@@ -44,8 +47,9 @@ class ListContainer extends Component {
 }
 
 ListContainer.propTypes = {
-  markers: PropTypes.array.isRequired, 
-  loadMarkers: PropTypes.func.isRequired
+  markers: PropTypes.array.isRequired,
+  loadMarkers: PropTypes.func.isRequired,
+  unloadMarkers: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -53,7 +57,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadMarkers: () => dispatch(loadMarkers())
+  loadMarkers: () => dispatch(loadMarkers()),
+  unloadMarkers: () => dispatch(unloadMarkers())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListContainer);
