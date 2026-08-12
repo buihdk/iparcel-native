@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, Text, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import { loadMarkers, sendMarker, setCurrentLocation } from '../../utils/actions';
+import { loadMarkers, unloadMarkers, sendMarker, setCurrentLocation } from '../../utils/actions';
 import { Constants, Location, Permissions } from 'expo';
 import { MapView } from 'expo';
 
@@ -42,10 +42,14 @@ class MapContainer extends Component {
     this.props.loadMarkers();
   }
 
+  componentWillUnmount() {
+    this.props.unloadMarkers();
+  }
+
   render() {
     if (this.state.errorMessage)
       return <Text style={{margin: 60, textAlign: 'center'}}>{this.state.errorMessage}</Text>;
-    else if (this.props.markers.length < 1 || this.props.markers == undefined || this.props.currentLatitude == undefined || this.props.currentLongitude == undefined)
+    else if (this.props.markers == undefined || this.props.currentLatitude == undefined || this.props.currentLongitude == undefined)
       return <ActivityIndicator size='large' style={{marginTop: '50%'}}/>;
     else 
       return (
@@ -62,8 +66,8 @@ class MapContainer extends Component {
           showsUserLocation = {true}
         >
           { 
-            this.props.markers.map((marker,index) => { 
-              return <MapView.Marker {...marker.marker} key={index} />;
+            this.props.markers.map((marker) => {
+              return <MapView.Marker {...marker.marker} key={marker.key} />;
             })
           }  
         </MapView>
@@ -80,6 +84,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   loadMarkers: () => dispatch(loadMarkers()),
+  unloadMarkers: () => dispatch(unloadMarkers()),
   sendMarker: (marker) => dispatch(sendMarker(marker)),
   setCurrentLocation: (location) => dispatch(setCurrentLocation(location))
 });
