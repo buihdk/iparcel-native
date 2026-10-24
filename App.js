@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import React from 'react';
+import { legacy_createStore as createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
+import { thunk } from 'redux-thunk';
 import logger from 'redux-logger';
+import { StatusBar } from 'expo-status-bar';
 import { markers, loginInfo } from './utils/reducers';
 import Tabs from './components/TabNavigator';
 
@@ -11,16 +12,15 @@ const reducers = combineReducers({
   loginInfo
 });
 
-const middleware = applyMiddleware(thunk, logger);
+const middleware = __DEV__ ? applyMiddleware(thunk, logger) : applyMiddleware(thunk);
 
 const store = createStore(reducers, middleware);
 
-export default class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <Tabs/>  
-      </Provider>
-    );
-  }
+export default function App() {
+  return (
+    <Provider store={store}>
+      <Tabs />
+      <StatusBar style="auto" />
+    </Provider>
+  );
 }

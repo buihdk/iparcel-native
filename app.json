@@ -1,5 +1,24 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "name": "iParcel Native",
+    "slug": "iparcel-native",
+    "version": "0.2.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "iParcel shows your position on the delivery map."
+      }
+    },
+    "android": {
+      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
+    },
+    "plugins": [
+      [
+        "expo-location",
+        { "locationWhenInUsePermission": "iParcel shows your position on the delivery map." }
+      ]
+    ]
   }
 }

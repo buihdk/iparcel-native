@@ -1,11 +1,13 @@
-import firebase from './firebase';
+import { ref, onValue, push } from 'firebase/database';
+import { db } from './firebase';
+
+let detachMarkers = null;
 
 export const loadMarkers = () => (dispatch) => {
   dispatch(startLoadMarkers());
-  // Use a single value listener. It fires with the full list on attach and on
-  // every change. This avoids loading each marker twice and lets us detach with
-  // off() on unmount.
-  firebase.database().ref('markers').on('value', (snapshot) => {
+  if (detachMarkers) detachMarkers();
+  // A single value listener fires with the full list on attach and on every change.
+  detachMarkers = onValue(ref(db, 'markers'), (snapshot) => {
     const data = snapshot.val() || {};
     const formattedData = Object.keys(data).map(key => ({ key, ...data[key] }));
     dispatch(finishLoadMarkers(formattedData));
@@ -13,7 +15,10 @@ export const loadMarkers = () => (dispatch) => {
 };
 
 export const unloadMarkers = () => () => {
-  firebase.database().ref('markers').off('value');
+  if (detachMarkers) {
+    detachMarkers();
+    detachMarkers = null;
+  }
 };
 
 export const startLoadMarkers = () => ({
@@ -31,7 +36,7 @@ export const receiveMarker = (marker) => ({
 });
 
 export const sendMarker = (marker) => () => {
-  firebase.database().ref('markers').push(marker);
+  push(ref(db, 'markers'), marker);
 };
 
 export const setCurrentLocation = (location) => ({

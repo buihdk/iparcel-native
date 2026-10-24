@@ -1,64 +1,61 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { View, FlatList } from 'react-native';
-import { SearchBar, List, ListItem } from 'react-native-elements';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, TextInput, StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { loadMarkers, unloadMarkers } from '../../utils/actions';
-import PropTypes from 'prop-types';
 
-class ListContainer extends Component {
-  renderSeparator = () => {
-    return (
-      <View style={{ height: 1, width: '86%', backgroundColor: '#CED0CE', marginLeft: '14%' }} />
-    );
-  };
-  renderHeader = () => {
-    return <SearchBar placeholder="Type Here..." lightTheme round />;
-  };
-  componentDidMount() {
-    if (this.props.markers == undefined || this.props.markers.length < 1)
-      this.props.loadMarkers();
-  }
-  componentWillUnmount() {
-    this.props.unloadMarkers();
-  }
-  render() {
-    return (
-      <View>
-        <List containerStyle={{ marginTop: 40, borderTopWidth: 0, borderBottomWidth: 0 }}>
-          <FlatList
-            data={this.props.markers}
-            renderItem={({ item }) => (
-              <ListItem
-                roundAvatar
-                title={`${item.marker.title}`}
-                subtitle={`${item.marker.coordinate.latitude} ${item.marker.coordinate.longitude}`}
-                avatar={{ uri: 'https://placeimg.com/100/100/any' }}
-                containerStyle={{ borderBottomWidth: 0 }}
-              />
-            )}
-            keyExtractor={item => item.key} // temporary key for now
-            ItemSeparatorComponent={this.renderSeparator}
-            ListHeaderComponent={this.renderHeader}
-          />
-        </List>
-      </View> 
-    );
-  }
+export default function ListContainer() {
+  const dispatch = useDispatch();
+  const markers = useSelector(state => state.markers.markers);
+  const [query, setQuery] = useState('');
+
+  useEffect(() => {
+    dispatch(loadMarkers());
+    return () => {
+      dispatch(unloadMarkers());
+    };
+  }, [dispatch]);
+
+  const visible = markers.filter(item =>
+    item.marker.title.toLowerCase().includes(query.trim().toLowerCase())
+  );
+
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.search}
+        placeholder="Search deliveries"
+        value={query}
+        onChangeText={setQuery}
+        autoCorrect={false}
+      />
+      <FlatList
+        data={visible}
+        keyExtractor={item => item.key}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+        renderItem={({ item }) => (
+          <View style={styles.row}>
+            <Text style={styles.title}>{item.marker.title}</Text>
+            <Text style={styles.subtitle}>
+              {item.marker.coordinate.latitude} {item.marker.coordinate.longitude}
+            </Text>
+          </View>
+        )}
+      />
+    </View>
+  );
 }
 
-ListContainer.propTypes = {
-  markers: PropTypes.array.isRequired,
-  loadMarkers: PropTypes.func.isRequired,
-  unloadMarkers: PropTypes.func.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  markers: state.markers.markers,
+const styles = StyleSheet.create({
+  container: { flex: 1, paddingTop: 60 },
+  search: {
+    marginHorizontal: 16,
+    marginBottom: 8,
+    padding: 10,
+    borderRadius: 8,
+    backgroundColor: '#eef0ee'
+  },
+  separator: { height: 1, backgroundColor: '#CED0CE', marginLeft: 16 },
+  row: { paddingHorizontal: 16, paddingVertical: 12 },
+  title: { fontSize: 16, fontWeight: '600' },
+  subtitle: { fontSize: 13, color: '#6b6b6b', marginTop: 2 }
 });
-
-const mapDispatchToProps = (dispatch) => ({
-  loadMarkers: () => dispatch(loadMarkers()),
-  unloadMarkers: () => dispatch(unloadMarkers())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ListContainer);

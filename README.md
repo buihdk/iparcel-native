@@ -1,5 +1,16 @@
 # iParcel Native
 
+A delivery map app built with Expo (SDK 58), React Native, Redux, and Firebase Realtime Database.
+
+## Setup
+
+1. Install dependencies: `npm install --legacy-peer-deps`
+2. Copy `.env.example` to `.env` and fill in your Firebase values. The variables start with `EXPO_PUBLIC_`.
+3. Start the app: `npm start`. Open it in the Expo Go app or a simulator.
+4. Run the tests: `npm test`
+
+Maps use Apple Maps on iOS and Google Maps on Android. For Android release builds, add a Google Maps API key in `app.json`.
+
 ## Roadmap:
 * [ ] Location mocking to simulate driver moving along the path 
 (inspiration: https://medium.com/quick-code/react-native-location-tracking-14ab2c9e2db8).
